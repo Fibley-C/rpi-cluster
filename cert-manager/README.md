@@ -41,22 +41,11 @@ spec:
     secretName: my-ca-secret
 ```
 
-3. You should now be able to request certificates using the self-signed issuer, e.g. for n8n `certificate-n8n.yaml`
+3. You should now be able to request certificates using the self-signed issuer, e.g. for `n8n.yaml` the helm parameters would be
 
 ```
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: n8n-cert
-  namespace: n8n
-spec:
-  secretName: ingress-n8n-tls
-  duration: 2160h
-  renewBefore: 360h
-  issuerRef:
-    name: my-ca-issuer
-    kind: ClusterIssuer
-  commonName: n8n-192.168.1.42.nip.io
-  dnsNames:
-    - n8n-192.168.1.42.nip.io
+---
+- name: ingress.annotations.cert-manager\.io/cluster-issuer
+  value: my-ca-issuer
+---
 ```
